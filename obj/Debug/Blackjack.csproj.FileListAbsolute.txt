@@ -1,0 +1,6 @@
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\bin\Debug\Blackjack.exe.config
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\bin\Debug\Blackjack.exe
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\bin\Debug\Blackjack.pdb
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.csprojAssemblyReference.cache
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.exe
+C:\Users\QienDevelopers\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.pdb
