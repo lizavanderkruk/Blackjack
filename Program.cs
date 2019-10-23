@@ -14,7 +14,7 @@ namespace Blackjack
             //Console.WriteLine("Voer uw naam in: ");
             //Console.ReadLine();
             Spel _spel = new Spel();
-            Spel.KaartspelMaken();
+            _spel.StartSpel();
             Console.ReadKey();
         }
     }

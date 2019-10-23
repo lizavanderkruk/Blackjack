@@ -14,25 +14,26 @@ namespace Blackjack
         Dealer dealer = new Dealer();
         Speler speler = new Speler();
 
-        bool playActief = true;
-        
-        string input = "";
+        public bool playActief = true;
+        public bool EersteBeurt = true;
+        public string input = "";
         private static string[] kleuren = new string[4] { "Harten", "Ruiten", "Klaveren", "Schoppen" };
-        public Spel()
+
+        public void StartSpel()
         {
             KaartspelMaken();
-            Console.WriteLine("Druk op 'k' om een kaart te vragen."); 
+            Console.WriteLine("Druk op 'k' om een kaart te vragen.");
             StackBouwen();
-            speler.SpelerDeck();
-            dealer.DealerDeck();
-            speler.EersteBeurt = false;
+            SpelerDeck();
+            DealerDeck();
+            EersteBeurt = false;
 
             while (playActief == true)
-            { 
+            {
                 input = Console.ReadLine();
                 if (input == "k")
                 {
-                    speler.SpelerDeck();
+                    SpelerDeck();
                     Console.ReadKey();
                 }
                 else
@@ -58,7 +59,6 @@ namespace Blackjack
             Kaarten.Randomize();
             Console.ReadKey();
         }
-
         public static void StackBouwen()
         {
             for (int i = 0; i < 52; i++)
@@ -67,9 +67,41 @@ namespace Blackjack
                 //Console.WriteLine("(Pop)\t\t{0}", kaartenStack.Pop());
             }
             Console.ReadLine();
-        } 
+        }
+
+        public void SpelerDeck()
+        {
+            //while (playActief == true)
+            //{
+                if (EersteBeurt == true)
+                {
+                    var kaart1 = Spel.kaartenStack.Pop();
+                    var kaart2 = Spel.kaartenStack.Pop();
+                    Speler.spelerDeck.Add(kaart1);
+                    Speler.spelerDeck.Add(kaart2);
+                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " en een " + Speler.spelerDeck[Speler.spelerDeck.Count - 2] + " gekregen. Het totaal in je hand is " + speler.Waarde + ".");
+                }
+                if (EersteBeurt != true)
+                {
+                    var kaart1 = Spel.kaartenStack.Pop();
+                    Speler.spelerDeck.Add(kaart1);
+                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " gekregen.Het totaal in je hand is " + speler.Waarde + ".");
+                    input = Console.ReadLine();
+                }
+            }
+        //}
+            public void DealerDeck()
+            {
+                if (EersteBeurt == true)
+                {
+                    var kaart1 = Spel.kaartenStack.Pop();
+                    Dealer.dealerDeck.Add(kaart1);
+                    Console.WriteLine("De dealer heeft een " + Dealer.dealerDeck[Dealer.dealerDeck.Count - 1] + " gekregen. Het totaal van de dealer is " + dealer.Waarde + ".");
+                }
+            }
+
+        }
     }
-}
 
 
 
