@@ -51,6 +51,7 @@
     <Compile Include="Regels.cs" />
     <Compile Include="Spel.cs" />
     <Compile Include="Speler.cs" />
+    <Compile Include="StackKaarten.cs" />
     <Compile Include="Symbolen.cs" />
   </ItemGroup>
   <ItemGroup>

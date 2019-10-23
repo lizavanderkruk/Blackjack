@@ -11,9 +11,10 @@ namespace Blackjack
         static void Main(string[] args)
         {
             Console.WriteLine("Welkom bij BlackJack");
-            Console.ReadKey();
+            //Console.WriteLine("Voer uw naam in: ");
+            //Console.ReadLine();
             Spel _spel = new Spel();
-            _spel.KaartspelMaken();
+            Spel.KaartspelMaken();
             Console.ReadKey();
         }
     }

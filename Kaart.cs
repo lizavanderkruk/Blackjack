@@ -10,13 +10,15 @@ namespace Blackjack
     {
         public int Nummer { get; set; }
         public string Kleur { get; set; }
+        public int Waarde { get; set; }
         public bool Gepakt { get; set; }
         public int Count { get; set; }
 
-        public Kaart(int nummer, string kleur)
+        public Kaart(int nummer, string kleur, int waarde)
         {
             this.Nummer = nummer;
             this.Kleur = kleur;
+            this.Waarde = waarde;
             this.Gepakt = false;
             this.Count = 0;
         }
@@ -29,7 +31,7 @@ namespace Blackjack
     
     public class Plaatjeskaart: Kaart
     {
-        public Plaatjeskaart(string kleur, string naam): base(10, kleur)
+        public Plaatjeskaart(string kleur, string naam): base(10, kleur, 10)
         {
             Naam = naam;
         }
@@ -41,7 +43,7 @@ namespace Blackjack
     }
     public class Aas: Kaart
     {
-        public Aas(string kleur, string naam): base (11, kleur)
+        public Aas(string kleur, string naam): base (11, kleur, 11)
         {
             Naam = naam;
         }

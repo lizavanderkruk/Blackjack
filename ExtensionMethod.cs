@@ -8,20 +8,20 @@ namespace Blackjack
 {
     public static class ExtensionMethod
     {
-        public static List<Kaart> Randomize (this IList<Kaart> list)
+        public static void Randomize<T> (this IList<T> list)
         {
-            List<Kaart> Kaarten = new List<Kaart>();
+            
             Random rnd = new Random();
             int n = list.Count;
             while (n > 1)
             {
                 n--;
                 int k = rnd.Next(n + 1);
-                Kaart value = list[k];
+                T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
             }
-            return Kaarten;
+            
     }
 }
 }
