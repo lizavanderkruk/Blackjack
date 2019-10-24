@@ -15,7 +15,7 @@ namespace Blackjack
             //Console.ReadLine();
             Spel _spel = new Spel();
             _spel.StartSpel();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }

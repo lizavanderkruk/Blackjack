@@ -16,6 +16,7 @@ namespace Blackjack
 
         public bool playActief = true;
         public bool EersteBeurt = true;
+        public bool LaatsteKaartGepakt = true;
         public string input = "";
         private static string[] kleuren = new string[4] { "Harten", "Ruiten", "Klaveren", "Schoppen" };
 
@@ -34,15 +35,82 @@ namespace Blackjack
                 if (input == "k")
                 {
                     SpelerDeck();
-                    Console.ReadKey();
+                    DealerDeck();
+                    SpelSpelen(); 
                 }
-                else
+                else if (input == "p")
+                {
+                    Console.WriteLine("Je wilt passen.");
+                    EersteBeurt = false;
+                    DealerDeck();
+                }
+                else if (playActief == true)
                 {
                     Console.WriteLine("Verkeerde invoer, klik op 'k' voor een kaart.");
                     input = Console.ReadLine();
                 }
             }
         }
+        public void SpelerDeck()
+        {
+            if (EersteBeurt == true)
+            {
+                var kaart1 = Spel.kaartenStack.Pop();
+                var kaart2 = Spel.kaartenStack.Pop();
+                Speler.spelerDeck.Add(kaart1);
+                Speler.spelerDeck.Add(kaart2);
+                Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " en een " + Speler.spelerDeck[Speler.spelerDeck.Count - 2] + " gekregen. Het totaal in je hand is " + speler.Waarde + ".");
+                //EersteBeurt = false;
+            }
+            else
+            {
+                SpelSpelen();
+            }
+            
+        }
+        public void DealerDeck()
+        {
+            if (EersteBeurt == true)
+            {
+                var kaart1 = Spel.kaartenStack.Pop();
+                Dealer.dealerDeck.Add(kaart1);
+                Console.WriteLine("De dealer heeft een " + Dealer.dealerDeck[Dealer.dealerDeck.Count - 1] + " gekregen. Het totaal van de dealer is " + dealer.Waarde + ".");
+            }
+            if (EersteBeurt != true && playActief == true)
+            {
+                var kaart1 = Spel.kaartenStack.Pop();
+                Dealer.dealerDeck.Add(kaart1);
+                Console.WriteLine("De dealer heeft een " + Dealer.dealerDeck[Dealer.dealerDeck.Count - 1] + " gekregen. Het totaal van de dealer is " + dealer.Waarde + ".");
+            }
+        }
+        public void SpelSpelen()
+        {            
+            do
+            {
+                if (speler.Waarde< 21)
+                {
+                    EersteBeurt = false;
+                    var kaart1 = Spel.kaartenStack.Pop();
+                    Speler.spelerDeck.Add(kaart1);
+                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " gekregen.Het totaal in je hand is " + speler.Waarde + ".");
+                    input = Console.ReadLine();
+                }
+                if (speler.Waarde == 21 && playActief == true)
+                {
+                    Console.WriteLine("Je hebt Blackjack");
+                    playActief = false;
+                    Console.ReadKey();
+                }
+                if(speler.Waarde > 21 && playActief == true)
+                {
+                    Console.WriteLine("Je hebt verloren");
+                    playActief = false;
+                    Console.ReadKey();
+                }
+            }
+            while (speler.Waarde <=21 && playActief == true);
+        }
+
         public static void KaartspelMaken()
         {
             foreach (var kleur in kleuren)
@@ -57,7 +125,7 @@ namespace Blackjack
                 Kaarten.Add(new Aas(kleur, "Aas"));
             }
             Kaarten.Randomize();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
         public static void StackBouwen()
         {
@@ -68,40 +136,8 @@ namespace Blackjack
             }
             Console.ReadLine();
         }
-
-        public void SpelerDeck()
-        {
-            //while (playActief == true)
-            //{
-                if (EersteBeurt == true)
-                {
-                    var kaart1 = Spel.kaartenStack.Pop();
-                    var kaart2 = Spel.kaartenStack.Pop();
-                    Speler.spelerDeck.Add(kaart1);
-                    Speler.spelerDeck.Add(kaart2);
-                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " en een " + Speler.spelerDeck[Speler.spelerDeck.Count - 2] + " gekregen. Het totaal in je hand is " + speler.Waarde + ".");
-                }
-                if (EersteBeurt != true)
-                {
-                    var kaart1 = Spel.kaartenStack.Pop();
-                    Speler.spelerDeck.Add(kaart1);
-                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " gekregen.Het totaal in je hand is " + speler.Waarde + ".");
-                    input = Console.ReadLine();
-                }
-            }
-        //}
-            public void DealerDeck()
-            {
-                if (EersteBeurt == true)
-                {
-                    var kaart1 = Spel.kaartenStack.Pop();
-                    Dealer.dealerDeck.Add(kaart1);
-                    Console.WriteLine("De dealer heeft een " + Dealer.dealerDeck[Dealer.dealerDeck.Count - 1] + " gekregen. Het totaal van de dealer is " + dealer.Waarde + ".");
-                }
-            }
-
-        }
     }
+}
 
 
 
@@ -110,20 +146,7 @@ namespace Blackjack
             
 
             
-            /*for (int x = 0; x < nummers.Length; x++)
-            {
-                for (int y = 0; y < kleuren.Length; y++)
-                {
-                    kaarten.Add(new Kaart(nummers[x], kleuren[y]));
-                }
-            }
-            for (int i = 0; i < 52; i++)
-            {
-                Console.WriteLine(kaarten[i]);
-                Console.ReadKey();
-            }
-            Console.ReadLine();
-        }*/
+            
  
                 
        
