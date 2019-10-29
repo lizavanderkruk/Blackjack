@@ -8,8 +8,14 @@ namespace Blackjack
 {
     public class Speler
     {
+        public string name;
         public static List<Kaart> spelerDeck = new List<Kaart>();
-        public string Naam { get; set; }
+
+        public Speler(string speler)
+        {
+            name = speler;
+        }
+        public string Naam { get { return name; } }
         public int Waarde
         {
             get
@@ -22,5 +28,3 @@ namespace Blackjack
         }
     }
 }
-
-

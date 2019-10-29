@@ -8,7 +8,7 @@ namespace Blackjack
 {
     public class Dealer
     {
-        Speler speler = new Speler();
+        //Speler speler = new Speler();
         public string Naam { get; set; }
         public int Waarde { get { int totaalWaarde = 0;
                 foreach (var kaart in dealerDeck)

@@ -4,15 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blackjack;
+using Blackjack.Database;
+using Blackjack.Repositories;
 
 namespace Blackjack
 {
     public class Spel
     {
+        static public List<Speler> Spelertjes = new List<Speler>();
         public static List<Kaart> Kaarten = new List<Kaart>();
         public static Stack<Kaart> kaartenStack = new Stack<Kaart>();
+        private speler_db spelerRepo = new speler_db();
+
         Dealer dealer = new Dealer();
-        Speler speler = new Speler();
+        //Speler speler = new Speler(speler);
+        public Speler activePlayer;
 
         public bool playActief = true;
         public bool EersteBeurt = true;
@@ -22,9 +28,17 @@ namespace Blackjack
 
         public void StartSpel()
         {
+            Console.WriteLine("Welkom bij Blackjack!");
+            Console.WriteLine("Wat is je naam Speler?");
+            string inputnaam = Console.ReadLine();
+            CheckNaamDb(inputnaam);
+            SpelerToevoegen(inputnaam);
+
             KaartspelMaken();
-            Console.WriteLine("Druk op 'k' om een kaart te vragen.");
             StackBouwen();
+            Console.WriteLine("Druk op 'k' om een kaart te vragen.");
+
+            activePlayer = Spelertjes[0];
             SpelerDeck();
             DealerDeck();
             EersteBeurt = false;
@@ -51,6 +65,25 @@ namespace Blackjack
                 }
             }
         }
+        public void CheckNaamDb(string naam)
+        {
+            bool BestaatAl = false;
+            foreach (spelers speler in spelerRepo.GetSpelers())
+            {
+                if (naam == speler.speler_naam)
+                {
+                    BestaatAl = true;
+                    Console.WriteLine("Deze persoon bestaat al.");
+                    Console.ReadKey();
+                }
+            }
+            if (BestaatAl == false)
+            {
+                var newPlayer = new spelers();
+                newPlayer.speler_naam = naam;
+                spelerRepo.AddNewSpeler(newPlayer);
+            }
+        }
         public void SpelerDeck()
         {
             if (EersteBeurt == true)
@@ -59,7 +92,7 @@ namespace Blackjack
                 var kaart2 = Spel.kaartenStack.Pop();
                 Speler.spelerDeck.Add(kaart1);
                 Speler.spelerDeck.Add(kaart2);
-                Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " en een " + Speler.spelerDeck[Speler.spelerDeck.Count - 2] + " gekregen. Het totaal in je hand is " + speler.Waarde + ".");
+                Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " en een " + Speler.spelerDeck[Speler.spelerDeck.Count - 2] + " gekregen. Het totaal in je hand is " + activePlayer.Waarde + ".");
                 //EersteBeurt = false;
             }
             else
@@ -87,28 +120,28 @@ namespace Blackjack
         {            
             do
             {
-                if (speler.Waarde< 21)
+                if (activePlayer.Waarde< 21)
                 {
                     EersteBeurt = false;
                     var kaart1 = Spel.kaartenStack.Pop();
                     Speler.spelerDeck.Add(kaart1);
-                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " gekregen.Het totaal in je hand is " + speler.Waarde + ".");
+                    Console.WriteLine("Je hebt een " + Speler.spelerDeck[Speler.spelerDeck.Count - 1] + " gekregen.Het totaal in je hand is " + activePlayer.Waarde + ".");
                     input = Console.ReadLine();
                 }
-                if (speler.Waarde == 21 && playActief == true)
+                if (activePlayer.Waarde == 21 && playActief == true)
                 {
                     Console.WriteLine("Je hebt Blackjack");
                     playActief = false;
                     Console.ReadKey();
                 }
-                if(speler.Waarde > 21 && playActief == true)
+                if(activePlayer.Waarde > 21 && playActief == true)
                 {
                     Console.WriteLine("Je hebt verloren");
                     playActief = false;
                     Console.ReadKey();
                 }
             }
-            while (speler.Waarde <=21 && playActief == true);
+            while (activePlayer.Waarde <=21 && playActief == true);
         }
 
         public static void KaartspelMaken()
@@ -135,6 +168,11 @@ namespace Blackjack
                 //Console.WriteLine("(Pop)\t\t{0}", kaartenStack.Pop());
             }
             Console.ReadLine();
+        }
+        public void SpelerToevoegen(string Naam)
+        {
+            Speler spelerNaam = new Speler(Naam);
+            Spelertjes.Add(spelerNaam);
         }
     }
 }

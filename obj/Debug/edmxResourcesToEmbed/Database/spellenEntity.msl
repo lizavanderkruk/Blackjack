@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SpellenModelStoreContainer" CdmEntityContainer="SpellenEntities1">
+    <EntitySetMapping Name="spelers1">
+      <EntityTypeMapping TypeName="SpellenModel.spelers">
+        <MappingFragment StoreEntitySet="spelers">
+          <ScalarProperty Name="speler_naam" ColumnName="speler_naam" />
+          <ScalarProperty Name="speler_id" ColumnName="speler_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Spellens">
+      <EntityTypeMapping TypeName="SpellenModel.Spellen">
+        <MappingFragment StoreEntitySet="Spellen">
+          <ScalarProperty Name="spel_id" ColumnName="spel_id" />
+          <ScalarProperty Name="spel_naam" ColumnName="spel_naam" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sessies">
+      <EntityTypeMapping TypeName="SpellenModel.sessy">
+        <MappingFragment StoreEntitySet="sessies">
+          <ScalarProperty Name="speler_id" ColumnName="speler_id" />
+          <ScalarProperty Name="spel_id" ColumnName="spel_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

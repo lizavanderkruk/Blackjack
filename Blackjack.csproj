@@ -33,8 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,18 +52,65 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\sessy.cs">
+      <DependentUpon>spellenEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spelers.cs">
+      <DependentUpon>spellenEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Spellen.cs">
+      <DependentUpon>spellenEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spellenEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>spellenEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spellenEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>spellenEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spellenEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>spellenEntity.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Dealer.cs" />
     <Compile Include="ExtensionMethod.cs" />
     <Compile Include="Kaart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Regels.cs" />
+    <Compile Include="Repositories\speler_db.cs" />
     <Compile Include="Spel.cs" />
     <Compile Include="Speler.cs" />
     <Compile Include="Symbolen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Database\spellenEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>spellenEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Database\spellenEntity.edmx.diagram">
+      <DependentUpon>spellenEntity.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Database\spellenEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>spellenEntity.edmx</DependentUpon>
+      <LastGenOutput>spellenEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\spellenEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>spellenEntity.edmx</DependentUpon>
+      <LastGenOutput>spellenEntity.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

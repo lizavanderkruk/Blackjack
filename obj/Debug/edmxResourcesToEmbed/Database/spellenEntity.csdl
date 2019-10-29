@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SpellenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="spelers">
+    <Key>
+      <PropertyRef Name="speler_id" />
+    </Key>
+    <Property Name="speler_naam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="speler_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="sessies" Relationship="SpellenModel.FK__sessies__speler___3F466844" FromRole="spelers" ToRole="sessy" />
+  </EntityType>
+  <EntityContainer Name="SpellenEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="spelers1" EntityType="SpellenModel.spelers" />
+    <EntitySet Name="Spellens" EntityType="SpellenModel.Spellen" />
+    <EntitySet Name="sessies" EntityType="SpellenModel.sessy" />
+    <AssociationSet Name="FK__sessies__speler___3F466844" Association="SpellenModel.FK__sessies__speler___3F466844">
+      <End Role="spelers" EntitySet="spelers1" />
+      <End Role="sessy" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sessies__spel_id__3E52440B" Association="SpellenModel.FK__sessies__spel_id__3E52440B">
+      <End Role="Spellen" EntitySet="Spellens" />
+      <End Role="sessy" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Spellen_Spellen" Association="SpellenModel.FK_Spellen_Spellen">
+      <End Role="Spellen" EntitySet="Spellens" />
+      <End Role="Spellen1" EntitySet="Spellens" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Spellen">
+    <Key>
+      <PropertyRef Name="spel_id" />
+    </Key>
+    <Property Name="spel_naam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="spel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="sessy" Relationship="SpellenModel.FK__sessies__spel_id__3E52440B" FromRole="Spellen" ToRole="sessy" />
+    <NavigationProperty Name="Spellen1" Relationship="SpellenModel.FK_Spellen_Spellen" FromRole="Spellen" ToRole="Spellen1" />
+    <NavigationProperty Name="Spellen2" Relationship="SpellenModel.FK_Spellen_Spellen" FromRole="Spellen1" ToRole="Spellen" />
+  </EntityType>
+  <EntityType Name="sessy">
+    <Key>
+      <PropertyRef Name="spel_id" />
+    </Key>
+    <Property Name="spel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="speler_id" Type="Int32" />
+    <NavigationProperty Name="speler" Relationship="SpellenModel.FK__sessies__speler___3F466844" FromRole="sessy" ToRole="spelers" />
+    <NavigationProperty Name="Spellen" Relationship="SpellenModel.FK__sessies__spel_id__3E52440B" FromRole="sessy" ToRole="Spellen" />
+  </EntityType>
+  <Association Name="FK__sessies__speler___3F466844">
+    <End Type="SpellenModel.spelers" Role="spelers" Multiplicity="0..1" />
+    <End Type="SpellenModel.sessy" Role="sessy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spelers">
+        <PropertyRef Name="speler_id" />
+      </Principal>
+      <Dependent Role="sessy">
+        <PropertyRef Name="speler_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sessies__spel_id__3E52440B">
+    <End Type="SpellenModel.Spellen" Role="Spellen" Multiplicity="1" />
+    <End Type="SpellenModel.sessy" Role="sessy" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Spellen">
+        <PropertyRef Name="spel_id" />
+      </Principal>
+      <Dependent Role="sessy">
+        <PropertyRef Name="spel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Spellen_Spellen">
+    <End Type="SpellenModel.Spellen" Role="Spellen" Multiplicity="1" />
+    <End Type="SpellenModel.Spellen" Role="Spellen1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Spellen">
+        <PropertyRef Name="spel_id" />
+      </Principal>
+      <Dependent Role="Spellen1">
+        <PropertyRef Name="spel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

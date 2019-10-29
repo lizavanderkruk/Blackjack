@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SpellenModelStoreContainer" CdmEntityContainer="SpellenEntities">
+    <EntitySetMapping Name="Spelers">
+      <EntityTypeMapping TypeName="SpellenModel.Speler">
+        <MappingFragment StoreEntitySet="Spelers">
+          <ScalarProperty Name="speler_naam" ColumnName="speler_naam" />
+          <ScalarProperty Name="speler_id" ColumnName="speler_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

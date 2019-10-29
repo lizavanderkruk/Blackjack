@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SpellenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Spellen.dbo.sessies' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="sessies">
+    <Key>
+      <PropertyRef Name="spel_id" />
+    </Key>
+    <Property Name="spel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="speler_id" Type="int" />
+  </EntityType>
+  <EntityType Name="spelers">
+    <Key>
+      <PropertyRef Name="speler_id" />
+    </Key>
+    <Property Name="speler_naam" Type="varchar" MaxLength="50" />
+    <Property Name="speler_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Spellen">
+    <Key>
+      <PropertyRef Name="spel_id" />
+    </Key>
+    <Property Name="spel_naam" Type="varchar" MaxLength="50" />
+    <Property Name="spel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__sessies__spel_id__3E52440B">
+    <End Role="Spellen" Type="Self.Spellen" Multiplicity="1" />
+    <End Role="sessies" Type="Self.sessies" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Spellen">
+        <PropertyRef Name="spel_id" />
+      </Principal>
+      <Dependent Role="sessies">
+        <PropertyRef Name="spel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sessies__speler___3F466844">
+    <End Role="spelers" Type="Self.spelers" Multiplicity="0..1" />
+    <End Role="sessies" Type="Self.sessies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spelers">
+        <PropertyRef Name="speler_id" />
+      </Principal>
+      <Dependent Role="sessies">
+        <PropertyRef Name="speler_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Spellen_Spellen">
+    <End Role="Spellen" Type="Self.Spellen" Multiplicity="1" />
+    <End Role="Spellen1" Type="Self.Spellen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Spellen">
+        <PropertyRef Name="spel_id" />
+      </Principal>
+      <Dependent Role="Spellen1">
+        <PropertyRef Name="spel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SpellenModelStoreContainer">
+    <EntitySet Name="spelers" EntityType="Self.spelers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Spellen" EntityType="Self.Spellen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sessies" EntityType="Self.sessies" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [sessies].[spel_id] AS [spel_id], 
+    [sessies].[speler_id] AS [speler_id]
+    FROM [dbo].[sessies] AS [sessies]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__sessies__spel_id__3E52440B" Association="Self.FK__sessies__spel_id__3E52440B">
+      <End Role="Spellen" EntitySet="Spellen" />
+      <End Role="sessies" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sessies__speler___3F466844" Association="Self.FK__sessies__speler___3F466844">
+      <End Role="spelers" EntitySet="spelers" />
+      <End Role="sessies" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Spellen_Spellen" Association="Self.FK_Spellen_Spellen">
+      <End Role="Spellen" EntitySet="Spellen" />
+      <End Role="Spellen1" EntitySet="Spellen" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
